@@ -1,0 +1,33 @@
+/* Keep the same character order on every introduction site. */
+(() => {
+  if (window.CR_FRAME_CONTENT) return;
+  const header = document.querySelector('.site-shell > header');
+  if (!header || header.querySelector('.character-switcher')) return;
+  const menu = document.createElement('details');
+  menu.className = 'character-switcher';
+  const trigger = document.createElement('summary');
+  trigger.append(document.createTextNode('다른 캐릭터 '));
+  const mark = document.createElement('span');
+  mark.className = 'character-switch-mark'; mark.setAttribute('aria-hidden', 'true'); mark.textContent = '+';
+  trigger.append(mark);
+  const list = document.createElement('ul'); list.className = 'character-switch-list';
+  const characters = [
+    { id: 'home', name: '소개 페이지', href: 'https://jouurie.github.io/' },
+    { id: 'ww', name: '와이어트, 웨이드', href: 'https://jouurie.github.io/ww-profile/' },
+    { id: 'ig', name: '이결', href: 'https://jouurie.github.io/ig-profile/' },
+    { id: 'cr', name: '채린', href: 'index.html' }
+  ];
+  characters.forEach(character => {
+    const item = document.createElement('li');
+    const current = character.id === 'cr';
+    const row = document.createElement(current ? 'span' : 'a');
+    row.className = 'character-switch-row' + (current ? ' is-current' : '');
+    if (current) row.setAttribute('aria-current', 'true'); else row.href = character.href;
+    const name = document.createElement('span'); name.textContent = character.name;
+    const state = document.createElement('small'); state.textContent = current ? '현재 소개' : character.id === 'home' ? '전체 캐릭터 ↗' : '소개 바로가기 ↗';
+    row.append(name, state); item.append(row); list.append(item);
+  });
+  menu.append(trigger, list); header.append(menu);
+  document.addEventListener('click', event => { if (!menu.contains(event.target)) menu.open = false; });
+  document.addEventListener('keydown', event => { if (event.key === 'Escape' && menu.open) { menu.open = false; trigger.focus(); } });
+})();

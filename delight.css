@@ -1,0 +1,38 @@
+/* Symbols are clipped to this strip, never layered over content. */
+.cr-delight-ribbon { height: 8px; overflow: hidden; background: linear-gradient(90deg,var(--blue),var(--pink)); pointer-events: none; user-select: none; }
+.cr-ribbon-track { display: flex; width: max-content; color: var(--muted); opacity: .65; font: 8px/8px Georgia,serif; letter-spacing: 10px; white-space: nowrap; animation: cr-ribbon-drift 42s linear infinite; }
+.cr-ribbon-track > span { flex: none; }
+@keyframes cr-ribbon-drift { to { transform: translateX(-50%); } }
+
+
+.cr-click-hearts{position:fixed;inset:0;z-index:150;pointer-events:none;overflow:hidden;contain:strict;user-select:none}
+.cr-click-hearts>span{position:absolute;display:block;width:28px;height:28px;margin:0;padding:0;pointer-events:none;font-family:Georgia,serif;font-weight:700;line-height:1;text-align:center;font-size:var(--size);color:var(--tone);animation:cr-click-burst 900ms cubic-bezier(.17,.65,.32,1) both}
+@keyframes cr-click-burst{0%{opacity:0;transform:translate(-50%,-50%) scale(.3)}16%{opacity:.95}70%{opacity:.8}100%{opacity:0;transform:translate(calc(-50% + var(--dx)),calc(-50% + var(--dy))) scale(.65) rotate(var(--spin))}}
+
+
+/* Pointer feedback stays within the existing object; no extra frame or shadow. */
+.tags > span { color: var(--ink); }
+
+@media (hover: hover) and (pointer: fine) {
+  .site-shell [data-cr-hover="content"] { color: var(--muted); }
+  .site-shell [data-cr-hover="content"][data-cr-tone="ink"] { color: var(--ink); }
+  .site-shell :is(button,summary,[role="button"],[role="tab"])[data-cr-hover="control"] {
+    background-color: var(--pinkpaper);
+    color: var(--ink);
+  }
+  .site-shell :is(button,summary,[role="button"],[role="tab"])[data-cr-hover="control"][data-cr-fill="blue"] { background-color: var(--bluepaper); }
+  .site-shell a[data-cr-hover="control"] { color: var(--muted); }
+  .site-shell img[data-cr-hover] { filter: brightness(1.06) saturate(1.08); }
+  .site-shell .npc-folder[data-cr-hover="control"] { background: transparent; color: var(--muted); }
+  .site-shell .npc-folder[data-cr-hover]::before { filter: brightness(1.08); }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .site-shell .tags > span[data-cr-hover="content"] { color: var(--ink); background-color: var(--blue); }
+  .site-shell .tags > span:nth-child(even)[data-cr-hover="content"] { background-color: var(--pink); }
+}
+
+@media (hover:none),(pointer:coarse),(pointer:none){.site-shell [data-cr-hover="content"] { color: var(--muted); }.site-shell [data-cr-hover="content"][data-cr-tone="ink"] { color: var(--ink); }.site-shell :is(button,summary,[role="button"],[role="tab"])[data-cr-hover="control"] {
+    background-color: var(--pinkpaper);
+    color: var(--ink);
+  }.site-shell :is(button,summary,[role="button"],[role="tab"])[data-cr-hover="control"][data-cr-fill="blue"] { background-color: var(--bluepaper); }.site-shell a[data-cr-hover="control"] { color: var(--muted); }.site-shell img[data-cr-hover] { filter: brightness(1.06) saturate(1.08); }.site-shell .npc-folder[data-cr-hover="control"] { background: transparent; color: var(--muted); }.site-shell .npc-folder[data-cr-hover]::before { filter: brightness(1.08); }.site-shell .tags > span[data-cr-hover="content"] { color: var(--ink); background-color: var(--blue); }.site-shell .tags > span:nth-child(even)[data-cr-hover="content"] { background-color: var(--pink); }}

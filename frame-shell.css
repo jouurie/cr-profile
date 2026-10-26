@@ -1,0 +1,52 @@
+/* A stationary top frame and one independently scrolling content frame. */
+html.cr-frame-shell,html.cr-frame-shell body{height:100%;overflow:hidden;scrollbar-gutter:auto}
+.cr-frame-shell body{padding-right:var(--cr-content-gutter,0px)}
+.cr-frame-shell .site-shell>main,.cr-frame-shell .site-shell>footer{display:none}
+.cr-route-frame{position:fixed;top:var(--cr-chrome-height,80px);left:0;display:block;width:100%;height:calc(100dvh - var(--cr-chrome-height,80px));border:0;background:transparent}
+.cr-route-frame[hidden]{display:none}
+.cr-frame-content .site-shell>header,.cr-frame-content .cr-delight-ribbon{display:none!important}
+.cr-frame-content .site-shell>main{display:block}
+
+/* Two native pixel cursors keep the visible tip in both frames. */
+html,body{cursor:url("cursor-default.svg?v=20261023q") 2 2,auto}
+:is(button,a[href],summary,[role="button"],[role="tab"],input[type="range"]),img[data-cr-zoom]{cursor:url("cursor-action.svg") 10 2,pointer!important}
+:is(button:disabled,[aria-disabled="true"]){cursor:url("cursor-default.svg?v=20261023q") 2 2,default!important}
+
+/* The full image opens above both frames and keeps the original proportions. */
+.cr-image-viewer{width:fit-content;max-width:calc(100vw - 32px);max-height:calc(100dvh - 32px);margin:auto;padding:42px 12px 12px;border:1px solid var(--blue);border-radius:5px;background:var(--bg);overflow:auto;color:var(--ink)}
+.cr-image-viewer::backdrop{background:rgba(11,10,13,.7)}
+.cr-image-viewer img{display:block;max-width:calc(100vw - 58px);max-height:calc(100dvh - 100px);width:auto;height:auto;object-fit:contain;margin:auto}
+.cr-image-close{position:absolute;right:10px;top:8px;background:var(--pinkpaper);font-size:11px;min-height:26px}
+@media (hover:hover) and (pointer:fine){.cr-image-close:hover{background:var(--pink)}}@media (hover:none),(pointer:coarse),(pointer:none){.cr-image-close:active{background:var(--pink)}}
+
+/* Every scrolling surface uses the same accepted pink and blue palette. */
+:root{--cr-scroll-thumb:var(--pink,#FAD461);--cr-scroll-track:var(--bluepaper,#EEF6FC)}
+*{scrollbar-color:var(--cr-scroll-thumb) var(--cr-scroll-track)}
+*::-webkit-scrollbar,*::-webkit-scrollbar-track,*::-webkit-scrollbar-corner{background-color:var(--cr-scroll-track)}
+*::-webkit-scrollbar-thumb{background-color:var(--cr-scroll-thumb);border-radius:8px}
+@media(forced-colors:active){*{scrollbar-color:auto}*::-webkit-scrollbar,*::-webkit-scrollbar-track,*::-webkit-scrollbar-thumb,*::-webkit-scrollbar-corner{background-color:revert}}
+
+/* One brief window-opening gesture; the shared header never moves. */
+.cr-route-frame{transform-origin:50% 0}
+.cr-route-frame.cr-frame-entering{z-index:1;will-change:transform,opacity}
+
+/* Page entry settles with the frame instead of fading again in a stagger. */
+.cr-frame-content :is(.page-masthead,.page-index .hero,.page-world .world-lead,.page-starts .film,.page-npc #npc,.page-music .music-layout,.world-grid > .world-card){animation-duration:160ms;animation-delay:0ms}
+
+/* Keep the mobile page menu on one reachable row. */
+@media(max-width:700px){.cr-frame-shell .site-shell>header>nav[aria-label="페이지 메뉴"]{flex-wrap:nowrap;overflow-x:auto;min-width:0}.cr-frame-shell .site-shell>header>nav[aria-label="페이지 메뉴"]>a{flex:0 0 auto;white-space:nowrap}}
+
+/* Mobile page-menu arrows share the Rhodes triangle form and the IG palette. */
+.cr-frame-shell .site-shell>header>.cr-menu-arrow{display:none}
+@media(max-width:700px){
+  .cr-frame-shell .site-shell>header{position:relative}
+  .cr-frame-shell .site-shell>header>nav[aria-label="페이지 메뉴"]{flex-basis:calc(100% - 60px);margin-inline:30px}
+  .cr-frame-shell .site-shell>header>.cr-menu-arrow{position:absolute;top:var(--cr-menu-top);display:grid;place-items:center;width:30px;min-width:30px;height:var(--cr-menu-height);min-height:0;margin:0;padding:0;border:0;border-radius:0;background:transparent;color:var(--blue);box-shadow:none;font-size:0;line-height:1;transition:color 120ms ease;-webkit-tap-highlight-color:transparent}
+  .cr-frame-shell .site-shell>header>.cr-menu-arrow.is-left{left:0}
+  .cr-frame-shell .site-shell>header>.cr-menu-arrow.is-right{right:0}
+  .cr-frame-shell .site-shell>header>.cr-menu-arrow::before{content:"";display:block;width:10px;height:8px;background:currentColor;clip-path:polygon(100% 0,0 50%,100% 100%)}
+  .cr-frame-shell .site-shell>header>.cr-menu-arrow.is-right::before{clip-path:polygon(0 0,100% 50%,0 100%)}
+  .cr-frame-shell .site-shell>header>.cr-menu-arrow:disabled{opacity:.35;cursor:default}
+  .cr-frame-shell .site-shell>header>.cr-menu-arrow:not(:disabled):active{color:var(--pink)}
+}
+@media(max-width:700px) and (hover:hover) and (pointer:fine){.cr-frame-shell .site-shell>header>.cr-menu-arrow:not(:disabled):hover{color:var(--pink)}}

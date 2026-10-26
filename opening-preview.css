@@ -1,0 +1,28 @@
+/* Existing film-card artwork and geometry remain in styles.css. */
+.cr-opening-card { font: inherit; color: inherit; cursor: default; }
+.page-starts .cr-opening-card[data-cr-opening-selected="true"] { outline: 3px solid var(--pink); outline-offset: -4px; }
+.page-starts .cr-opening-card[data-cr-opening-selected="true"]::before { filter: brightness(1.1) saturate(1.06); }
+.cr-opening-card .cr-opening-photo-button { position: absolute; inset: 0 0 auto; z-index: 1; width: 100%; height: calc(100% - 82px); min-height: 44px; margin: 0; padding: 0; border: 0; border-radius: 0; background: transparent; box-shadow: none; }
+.site-shell .cr-opening-card > .cr-opening-photo-button:is([data-cr-hover]) { background: transparent; }@media (hover:hover) and (pointer:fine){.site-shell .cr-opening-card > .cr-opening-photo-button:is(:hover) { background: transparent; }}@media (hover:none),(pointer:coarse),(pointer:none){.site-shell .cr-opening-card > .cr-opening-photo-button:is(:active) { background: transparent; }}
+.cr-opening-card .cr-opening-photo-button:focus-visible { outline: 2px solid var(--ink); outline-offset: -4px; }
+.page-starts .cr-opening-card:last-child .cr-opening-photo-button { inset: 0 0 0 auto; width: 39%; height: 100%; }
+.cr-opening-preview { box-sizing: border-box; width: min(770px, calc(100% - 32px)); max-height: calc(100dvh - 32px); margin: auto; padding: clamp(20px, 4vw, 36px); border: 1px solid var(--blue); border-radius: 5px; background: var(--bg); color: var(--ink); font: inherit; overflow-y: auto; scrollbar-color: var(--pink) var(--bluepaper); }
+.cr-opening-preview::backdrop { background: rgba(11,10,13,.7); }
+.cr-opening-preview-head { display: flex; align-items: flex-start; flex-wrap: nowrap; gap: 16px; margin: 0 0 24px; padding: 0; }
+.cr-opening-preview-head h2 { flex: 1; margin: 0; font-size: 22px; line-height: 1.5; }
+.cr-opening-preview-close { flex: none; width: 44px; min-height: 44px; padding: 0; background: var(--pinkpaper); font: inherit; font-size: 24px; line-height: 1; }
+@media (hover:hover) and (pointer:fine){.cr-opening-preview-close:hover { background: var(--pink); color: var(--ink); }}@media (hover:none),(pointer:coarse),(pointer:none){.cr-opening-preview-close:active { background: var(--pink); color: var(--ink); }}
+.cr-opening-preview-prose { max-width: 75ch; white-space: pre-wrap; overflow-wrap: anywhere; word-break: keep-all; font-size: 16px; line-height: 1.9; }
+.cr-opening-user { padding: 0 .12em; background: #D9EDF9; color: inherit; font-weight: inherit; border-radius: 2px; text-decoration: none; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
+.cr-opening-photo-preview { width: min(1020px, calc(100% - 32px)); }
+.cr-opening-photo-crop { width: 100%; aspect-ratio: 3 / 2; background-size: 200% 300%; background-repeat: no-repeat; }
+@media(hover:hover)  and (pointer:fine){ .cr-opening-card:hover { background-color: var(--pinkpaper); color: var(--ink); } .cr-opening-card:nth-child(even):hover { background-color: var(--bluepaper); } }@media (hover:none),(pointer:coarse),(pointer:none){.cr-opening-card:active { background-color: var(--pinkpaper); color: var(--ink); }.cr-opening-card:nth-child(even):active { background-color: var(--bluepaper); }}
+@media(max-width:700px) { .page-starts .cr-opening-card:last-child .cr-opening-photo-button { width: 47%; } }
+@media(max-width:600px) { .cr-opening-preview { width: calc(100% - 20px); max-height: calc(100dvh - 20px); padding: 20px; } }
+
+.cr-opening-component { display:block; width:100%; min-height:160px; height:640px; border:0; margin:12px 0; }
+
+.page-starts .cr-opening-card > .cr-opening-preview-button{position:absolute;top:12px;right:12px;z-index:3;width:auto;min-height:21px;margin:0;padding:2px 6px;border:1px solid var(--pink);border-radius:1px;background:var(--pinkpaper);color:var(--ink);font:inherit;font-size:10px;font-weight:500;line-height:15px;cursor:pointer;box-shadow:none}
+.page-starts .cr-opening-card > .cr-opening-preview-button:is(:focus-visible){background:var(--pink);border-color:var(--pink);color:var(--ink)}@media (hover:hover) and (pointer:fine){.page-starts .cr-opening-card > .cr-opening-preview-button:is(:hover){background:var(--pink);border-color:var(--pink);color:var(--ink)}}@media (hover:none),(pointer:coarse),(pointer:none){.page-starts .cr-opening-card > .cr-opening-preview-button:is(:active){background:var(--pink);border-color:var(--pink);color:var(--ink)}}
+
+@media(max-width:700px){.page-starts .cr-opening-card > .cr-opening-preview-button{top:10px;right:10px}}
