@@ -97,7 +97,7 @@
 .page-guide .command-platform-pair:nth-child(2) .command-platform-label{border-color:#FAD461;background:#FFF7E2}
 .page-guide .command-description{display:block;font-size:12px;line-height:1.85;word-break:keep-all;overflow-wrap:break-word}
 .page-guide .state-platforms{margin:12px 0 10px}
-.page-guide .state-section{width:400px}
+.page-guide .state-section,.page-guide #state-frame{width:400px}
 .page-guide #state-frame[hidden],.page-guide #command-feedback[hidden],.page-guide #state-placeholder[hidden]{display:none}
 
 /* Keep the short guidance action together on one line. */
