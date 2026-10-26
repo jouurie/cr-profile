@@ -1,5 +1,6 @@
 /* Keep the same character order on every introduction site. */
 (() => {
+  return; // Draft preview: keep this site accessible by its direct URL only.
   if (window.CR_FRAME_CONTENT) return;
   const header = document.querySelector('.site-shell > header');
   if (!header || header.querySelector('.character-switcher')) return;
