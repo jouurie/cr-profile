@@ -11,7 +11,10 @@
     close.textContent = '닫기 ×';
     close.setAttribute('aria-label', '확대한 이미지 닫기');
     const image = document.createElement('img');
-    dialog.append(close, image);
+    const crop = document.createElement('div');
+    crop.style.cssText='width:min(450px,70vw);aspect-ratio:2/3;background-size:300% 200%;background-repeat:no-repeat';
+    crop.hidden=true;
+    dialog.append(close, image, crop);
     document.body.append(dialog);
     close.addEventListener('click', () => dialog.close());
     dialog.addEventListener('click', event => {
@@ -29,6 +32,8 @@
       if (url.origin !== location.origin && url.origin !== 'https://cdn.imgchest.com') return;
       image.src = url.href;
       image.alt = String(event.data.alt || '채린 소개 이미지');
+      const isCrop=typeof event.data.crop==='string';image.hidden=isCrop;image.style.display=isCrop?'none':'';crop.hidden=!isCrop;
+      if(isCrop){crop.style.backgroundImage='url("'+url.href+'")';crop.style.backgroundPosition=event.data.crop;crop.setAttribute('role','img');crop.setAttribute('aria-label',image.alt)}
       if (!dialog.open) dialog.showModal();
       close.focus();
     });
@@ -37,24 +42,25 @@
 
   let lastImage;
   function decorate() {
-    document.querySelectorAll('main img:not([data-cr-zoom])').forEach(image => {
+    document.querySelectorAll('main img:not([data-cr-zoom]),.npc-atlas-slot:not([data-cr-zoom])').forEach(image => {
       if (image.closest('a,button,[role="button"]')) return;
       image.dataset.crZoom = '';
       image.tabIndex = 0;
       image.setAttribute('role', 'button');
-      image.setAttribute('aria-label', (image.alt || '이미지') + ' 크게 보기');
+      image.setAttribute('aria-label', (image.alt || image.getAttribute('aria-label') || '이미지') + ' 크게 보기');
     });
   }
   function open(image) {
     lastImage = image;
-    parent.postMessage({ type: 'cr-image-open', src: image.currentSrc || image.src, alt: image.alt }, sendOrigin);
+    const atlas=image.classList.contains('npc-atlas-slot');
+    parent.postMessage({ type: 'cr-image-open', src: atlas?getComputedStyle(image).backgroundImage.slice(5,-2):(image.currentSrc || image.src), alt: image.alt||image.getAttribute('aria-label'), crop:atlas?getComputedStyle(image).backgroundPosition:undefined }, sendOrigin);
   }
   document.addEventListener('click', event => {
-    const image = event.target.closest('img[data-cr-zoom]');
+    const image = event.target.closest('[data-cr-zoom]');
     if (image) open(image);
   });
   document.addEventListener('keydown', event => {
-    if ((event.key === 'Enter' || event.key === ' ') && event.target.matches('img[data-cr-zoom]')) {
+    if ((event.key === 'Enter' || event.key === ' ') && event.target.matches('[data-cr-zoom]')) {
       event.preventDefault();
       open(event.target);
     }
