@@ -289,7 +289,7 @@
       const when = card('사용 시점');
       list(when, guide('상태창 복원').filter(x => !x.startsWith('http') && !x.startsWith('🔗') && x !== '사용 시점'));
       const more = card('상태창 복원 안내 + 가이드');
-      if (platformSelections.recovery === 'nody') paragraphs(more, '노디 전용 상태창 복원 안내는 준비 중입니다.');
+      if (platformSelections.recovery === 'nody') paragraphs(more, '상태창 복원 안내는 준비 중입니다.');
       else externalLink(more, '지침 보기', guide('상태창 복원').find(x => x.startsWith('http')));
       panel.append(when, more);
     }
