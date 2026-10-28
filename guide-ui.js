@@ -132,7 +132,7 @@
 
   const panel = $('#guide-panel'), tabBar = $('#guide-tabs');
   if (!panel || !tabBar) return;
-  const platformSelections = { settings: null, recovery: null };
+  const platformSelections = { settings: null, recovery: null, status: null };
   function platformSection(section, title) {
     const selected = platformSelections[section], platforms = make('nav', 'settings-platforms');
     platforms.setAttribute('aria-label', title + ' 플랫폼');
@@ -244,7 +244,34 @@
       const groups = [ ['장면 이어가기', ['!이어서', '!잠시후', '!사건', '!이벤트']], ['분위기 조절', ['!장면고조', '!장면완화', '!회복', '!스킵']], ['기록과 시간', ['!커뮤', '!기억조각', '!다음날', '!다음달']] ];
       const grid = make('div', 'command-guide-grid'); groups.forEach(([title, names]) => { const c = card(title); names.forEach(name => { const command = d.commands.find(x => x.command === name), row = make('div', 'command-explainer'); const variants = make('div', 'command-variants'); [['엘린', command.command], ['노디', '/' + command.command.slice(1)]].forEach(([platform, value]) => { const pair = make('div', 'command-platform-pair'); pair.append(make('span', 'command-platform-label', platform), make('code', '', value)); variants.append(pair); }); row.append(variants, make('span', 'command-description', command.description)); c.append(row); }); grid.append(c); }); panel.append(grid, make('p', 'guide-note', '실제 채팅에서는 클릭 시 1턴이 소모됩니다. 직접 입력도 가능합니다.'));
     },
-    status() { const intro = card('상태창 읽는 법'); list(intro, guide('상태창 안내')); panel.append(intro); },
+    status() {
+      if (!platformSection('status', '상태창')) return;
+      const platform = platformSelections.status;
+      const intro = card('상태창 읽는 법'); list(intro, guide('상태창 안내')); panel.append(intro);
+      const fields = card('상태값');
+      fields.append(make('p', 'guide-note', platform === 'nody'
+        ? "노디는 응답 끝의 status JSON을 수정합니다. n을 포함한 상태값은 문자열로 입력합니다."
+        : '엘린은 ChaerinStatus 호출문의 prop 값을 수정합니다. 숫자는 중괄호, 문자열은 큰따옴표로 감쌉니다.'));
+      const table = make('table', 'guide-table status-field-table'), head = make('thead'), header = make('tr'), body = make('tbody');
+      table.setAttribute('aria-label', '채린 상태값 항목과 입력 예시');
+      ['항목', '의미', '값 · 예시'].forEach(label => { const cell = make('th', '', label); cell.scope = 'col'; header.append(cell); });
+      head.append(header);
+      const rows = [{"key":"n","meaning":"현재 턴 수","kind":"정수","example":"1 이상의 정수 · 예: 1"},{"key":"u","meaning":"상태창에 표시할 유저 이름","kind":"문자열","example":"\"유저이름\""},{"key":"charPosition","meaning":"채린의 장면 끝의 위치","kind":"문자열","example":"\"호텔 라운지 창가\""},{"key":"charOutfit","meaning":"채린의 보이는 복장/옷 상태","kind":"문자열","example":"\"검은 재킷, 슬랙스\""},{"key":"charState","meaning":"채린의 장면 끝의 자세/눈에 보이는 상태","kind":"문자열","example":"\"예약 확인서를 접어 든 상태\""},{"key":"charCaption","meaning":"이번 응답의 가시 결과를 채린 말투로 짧게 받아쓴 문구. 행동, 경로, 유저 상태는 넣지 않음","kind":"문자열","example":"\"옆방 하나쯤은 편하잖아.\""},{"key":"charKaomoji","meaning":"채린의 현재 표정 이모티콘","kind":"문자열","example":"\"(¬_¬)\""},{"key":"charUserRelation","meaning":"현재 증거에 맞춘 매우 짧은 수식어 하나 + 명료한 사람/관계명. 채린 관점만 기록함","kind":"문자열","example":"\"신경 쓰이는 소꿉친구\""},{"key":"userPosition","meaning":"유저의 장면 끝의 위치","kind":"문자열","example":"\"라운지 맞은편\""},{"key":"userOutfit","meaning":"유저의 보이는 복장/옷 상태","kind":"문자열","example":"\"외출복\""},{"key":"userState","meaning":"유저의 장면 끝의 자세/눈에 보이는 상태","kind":"문자열","example":"\"테이블 앞에 머무는 상태\""},{"key":"userKaomoji","meaning":"유저가 직접 보인 표정에 맞춘 이모티콘. 근거가 없으면 빈값","kind":"문자열","example":"\"\""},{"key":"userCharRelation","meaning":"유저가 직접 말하거나 공개적으로 드러낸 매우 짧은 수식어 하나 + 명료한 사람/관계명. 유저 감정은 추정하지 않음","kind":"문자열","example":"\"오래된 소꿉친구\""},{"key":"bondPhase","meaning":"관계 증거가 누적된 현재 단계(1 / 2 / 3 / 4 / 5). 상태 연속성용이며 화면에는 표시되지 않음","kind":"문자열","example":"\"1\" / \"2\" / \"3\" / \"4\" / \"5\""},{"key":"userTrust","meaning":"경계(low) / 흥미(curious) / 누그러짐(soft) / 상처(wounded) / 선택(chosen)","kind":"문자열","example":"\"low\" / \"curious\" / \"soft\" / \"wounded\" / \"chosen\""},{"key":"riskBeat","meaning":"잠잠(none) / 목격(caught) / 최후통첩(ultimatum) / 스캔들(scandal) / 이탈(escape)","kind":"문자열","example":"\"none\" / \"caught\" / \"ultimatum\" / \"scandal\" / \"escape\""},{"key":"hadSex","meaning":"두 사람 사이 성인 관계의 연속성 여부(no / yes)","kind":"문자열","example":"\"no\" / \"yes\""}];
+      if (platform === 'nody') {
+        const turn = rows.find(row => row.key === 'n'); turn.kind = '문자열'; turn.example = '숫자를 문자열로 입력 · 예: "1"';
+        const face = rows.find(row => row.key === 'userKaomoji'); face.meaning = '유저가 직접 보인 표정에 맞춘 이모티콘. 근거가 없으면 중립 표정'; face.example = '"(・_・)"';
+        rows.push({key:'loreKeys',meaning:'상태 연동용 내부 문자열. 자동으로 생성된 기존 값을 유지합니다.',kind:'문자열',example:'직접 수정하지 않음'});
+      }
+      rows.forEach(row => {
+        const tr = make('tr'), key = make('th'), meaning = make('td', '', row.meaning), value = make('td');
+        key.scope = 'row'; key.append(make('code', '', row.key));
+        value.append(make('span', 'status-value-kind', row.kind), make('code', '', row.example));
+        tr.append(key, meaning, value); body.append(tr);
+      });
+      table.append(head, body); fields.append(table); panel.append(fields);
+      const previewChoice = document.querySelector('#status [data-state-platform="' + platform + '"]');
+      if (previewChoice?.getAttribute('aria-pressed') !== 'true') previewChoice?.click();
+    },
     transfer() {
       if (!platformSection('recovery', '채팅방 이전 안내')) return;
       const when = card('사용 시점'); list(when, ["대화가 길어져 맥락이 흐려졌을 때","새 채팅방에서 이어가고 싶을 때"]);
@@ -318,6 +345,12 @@
     const index = choices.findIndex(choice => choice[0] === active); let next = index;
     if (e.key === 'ArrowRight') next = (index + 1) % choices.length; else if (e.key === 'ArrowLeft') next = (index + choices.length - 1) % choices.length; else if (e.key === 'Home') next = 0; else if (e.key === 'End') next = choices.length - 1; else return;
     e.preventDefault(); select(choices[next][0], true);
+  });
+  $('#status')?.addEventListener('click', event => {
+    const choice = event.target.closest('[data-state-platform]');
+    if (choice && active === 'status' && platformSelections.status !== choice.dataset.statePlatform) {
+      platformSelections.status = choice.dataset.statePlatform; select('status');
+    }
   });
   select('progress');
 })();
