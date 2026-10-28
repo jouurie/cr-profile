@@ -11,7 +11,7 @@
 
 
 /* Pointer feedback stays within the existing object; no extra frame or shadow. */
-.tags > span { color: var(--ink); }
+.tags span { color: var(--ink); }
 
 @media (hover: hover) and (pointer: fine) {
   .site-shell [data-cr-hover="content"] { color: var(--muted); }
@@ -28,11 +28,11 @@
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .site-shell .tags > span[data-cr-hover="content"] { color: var(--ink); background-color: var(--blue); }
-  .site-shell .tags > span:nth-child(even)[data-cr-hover="content"] { background-color: var(--pink); }
+  .site-shell .tags span[data-cr-hover="content"] { color: var(--ink); background-color: var(--blue); }
+  .site-shell .tags span:nth-child(even)[data-cr-hover="content"] { background-color: var(--pink); }
 }
 
 @media (hover:none),(pointer:coarse),(pointer:none){.site-shell [data-cr-hover="content"] { color: var(--muted); }.site-shell [data-cr-hover="content"][data-cr-tone="ink"] { color: var(--ink); }.site-shell :is(button,summary,[role="button"],[role="tab"])[data-cr-hover="control"] {
     background-color: var(--pinkpaper);
     color: var(--ink);
-  }.site-shell :is(button,summary,[role="button"],[role="tab"])[data-cr-hover="control"][data-cr-fill="blue"] { background-color: var(--bluepaper); }.site-shell a[data-cr-hover="control"] { color: var(--muted); }.site-shell img[data-cr-hover] { filter: brightness(1.06) saturate(1.08); }.site-shell .npc-folder[data-cr-hover="control"] { background: transparent; color: var(--muted); }.site-shell .npc-folder[data-cr-hover]::before { filter: brightness(1.08); }.site-shell .tags > span[data-cr-hover="content"] { color: var(--ink); background-color: var(--blue); }.site-shell .tags > span:nth-child(even)[data-cr-hover="content"] { background-color: var(--pink); }}
+  }.site-shell :is(button,summary,[role="button"],[role="tab"])[data-cr-hover="control"][data-cr-fill="blue"] { background-color: var(--bluepaper); }.site-shell a[data-cr-hover="control"] { color: var(--muted); }.site-shell img[data-cr-hover] { filter: brightness(1.06) saturate(1.08); }.site-shell .npc-folder[data-cr-hover="control"] { background: transparent; color: var(--muted); }.site-shell .npc-folder[data-cr-hover]::before { filter: brightness(1.08); }.site-shell .tags span[data-cr-hover="content"] { color: var(--ink); background-color: var(--blue); }.site-shell .tags span:nth-child(even)[data-cr-hover="content"] { background-color: var(--pink); }}
