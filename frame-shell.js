@@ -1,7 +1,7 @@
 /* The header belongs to one document; only the content frame navigates. */
 (() => {
   'use strict';
-  const version = '20261029-opening-label';
+  const version = '20261029-scroll-start';
   const names = ['index.html', 'world.html', 'starts.html', 'npc.html', 'guide.html', 'guide-nody.html', 'music.html'];
   const labels = ['소개·프로필', '세계관', '도입부', '주변 인물', '이용 가이드', '이용 가이드', '플레이리스트'];
   const base = new URL('./', location.href);
@@ -176,6 +176,7 @@
       view.hidden = false;
       view.inert = false;
       view.setAttribute('aria-hidden', 'false');
+      view.contentWindow?.postMessage({ type: 'cr-frame-top' }, origin);
       if (!previous || previous === view || typeof view.animate !== 'function') {
         if (previous !== view) retire(previous);
         return;
