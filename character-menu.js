@@ -1,6 +1,5 @@
 /* Keep the same character order on every introduction site. */
 (() => {
-  return; // Draft preview: keep this site accessible by its direct URL only.
   if (window.CR_FRAME_CONTENT) return;
   const header = document.querySelector('.site-shell > header');
   if (!header || header.querySelector('.character-switcher')) return;
@@ -16,7 +15,8 @@
     { id: 'home', name: '소개 페이지', href: 'https://jouurie.github.io/' },
     { id: 'ww', name: '와이어트, 웨이드', href: 'https://jouurie.github.io/ww-profile/' },
     { id: 'ig', name: '이결', href: 'https://jouurie.github.io/ig-profile/' },
-    { id: 'cr', name: '채린', href: 'index.html' }
+    { id: 'cr', name: '채린', href: 'index.html' },
+    { id: 'sh', name: '세혁', href: 'https://jouurie.github.io/sh-profile/' }
   ];
   characters.forEach(character => {
     const item = document.createElement('li');
