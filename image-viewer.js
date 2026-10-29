@@ -41,7 +41,7 @@
   let lastImage;
   function decorate() {
     document.querySelectorAll('main img:not([data-cr-zoom]),.npc-atlas-slot:not([data-cr-zoom])').forEach(image => {
-      if (image.matches('.player > img') || image.closest('a,button,[role="button"]')) return;
+      if (image.matches('.player > img, #intro .scene > img') || image.closest('a,button,[role="button"]')) return;
       image.dataset.crZoom = '';
       image.tabIndex = 0;
       image.setAttribute('role', 'button');
