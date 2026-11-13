@@ -1,0 +1,20 @@
+Current menu interaction sounds
+ui-menu-click.wav and ui-menu-hover.wav were synthesized for this site on 2026-10-24.
+They use short filtered-noise contacts and damped high-frequency resonances.
+No external recording is included in the current files.
+
+Previous sound package information (replaced files; retained for provenance):
+
+Menu interaction sounds
+Author: Kenney (https://kenney.nl)
+Pack: UI Audio / 51 UI sound effects (buttons, switches and clicks)
+Source: https://opengameart.org/content/51-ui-sound-effects-buttons-switches-and-clicks
+Pack page: https://kenney.nl/assets/ui-audio
+License: Creative Commons Zero 1.0 (CC0)
+License URL: https://creativecommons.org/publicdomain/zero/1.0/
+
+ui-menu-click.wav: click2.wav
+ui-menu-hover.wav: rollover2.wav
+The PCM peaks were normalized to 0.8. The page plays the short samples
+at a slightly higher pitch with a low playback volume.
+Downloaded on 2026-10-24. Attribution is optional under the source license.
